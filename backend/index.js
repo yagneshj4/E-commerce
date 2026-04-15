@@ -21,5 +21,5 @@ mongoose.connect(process.env.MONGODB_URL)
 app.get("/", (req, res) => {
     res.json({ message: "server is running" })
 })
-app.use("/auth", authRoutes)
+app.use("/api/auth", authRoutes)
 app.listen(5000, () => console.log("server runns on port 5000"))
