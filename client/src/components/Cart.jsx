@@ -25,9 +25,12 @@ function Cart() {
         if (!cart || !cart.item) return 0;
 
         return cart.item.reduce((total, item) => {
-            return total + item.productId.price * item.quantity;
+            if (!item.productId) return total;
+            return total + (item.productId.price || 0) * item.quantity;
         }, 0);
     };
+
+    const cartItems = cart?.item?.filter(item => item.productId) || [];
 
     return (
         <div className="container mt-5">
@@ -35,11 +38,11 @@ function Cart() {
 
             {loading ? (
                 <p>Loading...</p>
-            ) : !cart || !cart.item || cart.item.length === 0 ? (
+            ) : cartItems.length === 0 ? (
                 <p>No items in cart</p>
             ) : (
                 <>
-                    {cart.item.map((item) => (
+                    {cartItems.map((item) => (
                         <div key={item._id} className="card p-3 mb-3">
                             <div className="d-flex justify-content-between align-items-center">
 

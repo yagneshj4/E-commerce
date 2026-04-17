@@ -1,10 +1,12 @@
 import React, { useState } from 'react'
 import API from '../api/axios'
+import { useNavigate } from 'react-router-dom'
 export default function Register() {
     const [name, setName] = useState("")
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [mobile, setMobile] = useState("")
+    const navigate = useNavigate()
     function handleRegister(e) {
         e.preventDefault()
 
@@ -13,6 +15,7 @@ export default function Register() {
                 console.log("from then method", res)
                 if (res.status === 201) {
                     alert("Registration successfully")
+                    navigate("/login")
                 }
                 else if (res.status == 401) {
                     alert(res.data.message)
