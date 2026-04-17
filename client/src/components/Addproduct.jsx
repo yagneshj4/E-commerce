@@ -14,7 +14,8 @@ export default function Addproduct() {
     }
     function handleAddProduct(e) {
         e.preventDefault()
-        API.post("/product/add", formData)
+        const dataToSend = { ...formData, price: Number(formData.price) }
+        API.post("/product/add", dataToSend)
             .then((res) => {
                 if (res.status == 201) {
                     alert("Product added successfully")
@@ -22,9 +23,9 @@ export default function Addproduct() {
                 }
             })
             .catch(err => {
-                if (err?.response?.data.message) {
-                    console.log(err)
-                }
+                console.error("Error adding product:", err);
+                const message = err?.response?.data?.message || "Something went wrong";
+                alert(message);
             })
     }
     return (
